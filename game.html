@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+
+    <html>
+
+        <head>
+
+            <meta charset = "utf-8" />
+            <title>GameJAM</title>
+            <style>
+                * {
+                    padding: 0;
+                    margin: 0;
+                }
+                canvas {
+                    background: #ccc;
+                    display: block;
+                    margin: 0px;
+                }
+            </style>
+            
+            <canvas id="myCanvas" width="480" height="320"></canvas>
+        
+        </head>
+
+        <body>
+            Name: <input type="text" id="name">
+            <button onclick="set()">Start</button>
+            <button onclick="reset()">Reset</button>
+            <p id="sw">Score: 10000</p>
+            <p id="leaderboard">Leaderboard: </p>
+        </body>
+
+        <script>
+
+            var toggle = false;
+
+            class Ball {
+
+                constructor(x,y,radius,dx,dy) {
+                    this.x = x;
+                    this.y = y;
+                    this.radius = radius;
+                    this.dx = dx;
+                    this.dy = dy;
+                    this.die = false;
+                    this.dead = 0;
+                    this.gr = Math.floor(Math.random() * 255);
+                    this.gg = Math.floor(Math.random() * 255);
+                    this.gb = Math.floor(Math.random() * 255);
+                    this.r = 255;
+                    this.g = 255;
+                    this.b = 0;
+                }
+
+                death(death = false) {
+                    if(death) this.die = true;
+                }
+
+                detectCollision(cwidth,cheight) {
+                    if(this.y+this.dy<this.radius || this.y+this.dy>cheight-this.radius) this.dy = -this.dy;
+                    if(this.x+this.dx>cwidth-this.radius || this.x+this.dx<this.radius) this.dx = -this.dx;
+                }
+
+                drawBall() {
+                    if(this.dead < 15) {
+                        if(!this.die) {
+                            ctx.beginPath();
+                            ctx.arc(this.x,this.y,this.radius,0,Math.PI*2);
+                            ctx.fillStyle = "rgb("+this.gr+","+this.gg+","+this.gb+")";
+                            ctx.fill();
+                            ctx.closePath(); 
+                            this.x += this.dx;
+                            this.y += this.dy;
+                        } else {
+                            this.g -= 20;
+                            this.dead++;
+                            this.radius += 3;
+                            ctx.beginPath();
+                            ctx.arc(this.x,this.y,this.radius,0,Math.PI*2);
+                            ctx.fillStyle = "rgb("+this.r+","+this.g+","+this.b+")";
+                            ctx.fill();
+                            ctx.closePath(); 
+                            this.x += this.dx;
+                            this.y += this.dy;
+                        }
+                    }
+                }
+
+            }
+
+            class Destroyer {
+
+                constructor(x,y,radius) {
+                    this.x = x;
+                    this.y = y;
+                    this.radius = radius;
+                }
+
+                changeDestroyerPos(x,y) {
+                    this.x = x;
+                    this.y = y;
+                }
+
+                drawDestroyer() {
+                    ctx.beginPath();
+                    ctx.arc(this.x,this.y,this.radius,0,Math.PI*2);
+                    ctx.fillStyle = "#000000";
+                    ctx.fill();
+                    ctx.closePath(); 
+                }
+
+            }
+
+            var canvas = document.getElementById("myCanvas");
+            var ctx = canvas.getContext("2d");
+
+            var x = canvas.width/2;
+            var y = canvas.height/2;
+            var ballRadius = 10;
+            var b = new Array();
+            var interval;
+            var toggle = false;
+            var destroyer = new Destroyer(canvas.width/2, canvas.height/2, 15);
+            var cursorX = 0;
+            var cursorY = 0;
+            var time = 0;
+            var leaderboard = new Array();
+            var li = 0;
+
+            function createBalls() {
+                var negatex = 1;
+                var negatey = 1;
+                for(i = 0; i < 200; i++) {
+                    if(i % 2 == 0) negatex = negatex;
+                    else negatex *= -1
+                    if(i % 3 == 0) negatey = negatey;
+                    else negatey *= -1;
+                    b[i] = new Ball(x, y, ballRadius, negatex * Math.random(), negatey * Math.random());
+                }
+            }
+
+            function detectDeath(b,d) {
+                if(b.x < d.x + 10 && b.x > d.x - 10 && b.y < d.y + 10 && b.y > d.y - 10) return true;
+            }
+
+            document.onmousemove = function(e) {
+                var rect = canvas.getBoundingClientRect();
+                cursorX = (e.pageX - rect.left) / (rect.right - rect.left) * canvas.width;
+                cursorY = (e.pageY - rect.top) / (rect.bottom - rect.top) * canvas.height;
+            }
+
+            function draw() {
+                ctx.clearRect(0,0,canvas.width, canvas.height);
+                time--;
+                document.getElementById("sw").innerHTML = "Score: " + time;
+                for(i = 0; i < 200; i++) {
+                    if(detectDeath(b[i], destroyer)) {
+                        console.log("death!");
+                        b[i].death(true);
+                    }
+                    b[i].detectCollision(canvas.width,canvas.height);
+                    b[i].drawBall();
+                }
+                //console.log(cursorX, cursorY);
+                destroyer.changeDestroyerPos(cursorX, cursorY);
+                destroyer.drawDestroyer();
+                if(winner() == true) {
+                    reset();
+                }
+            }
+
+            function winner() {
+                win = true;
+                for(i = 0; i < 200; i++) {
+                    if(b[i].die != true) {
+                        win = false;
+                        i = 201;
+                    }
+                }
+                return win;
+            }
+
+            function set() {
+                if(!toggle) {
+                    createBalls();
+                    time = 10000;
+                    interval = setInterval(draw,1);
+                    toggle = true;
+                }
+            }
+
+            function reset() {
+                leaderboard[li] = time;
+                li++;
+                document.getElementById("sw").innerHTML = "Score: " + time;
+                ctx.clearRect(0,0,canvas.width,canvas.height);
+                clearInterval(interval);
+                createBalls();
+                toggle = false;
+                document.getElementById("leaderboard").innerHTML = "Leaderboard: " + leaderboard;
+            }
+        
+        </script>
+
+    </html>
