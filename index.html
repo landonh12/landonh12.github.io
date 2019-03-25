@@ -137,7 +137,7 @@
             var cursorX = 0;
             var cursorY = 0;
             var time = 0;
-            var leaderboard = new Array();
+            var leaderboard = {};
             var li = 0;
             var sound = new Array();
 
@@ -207,8 +207,7 @@
             }
 
             function reset() {
-                leaderboard[li] = time;
-                li++;
+                leaderboard[document.getElementById("name").text] = time;
                 leaderboard.sort();
                 leaderboard.reverse();
                 document.getElementById("sw").innerHTML = "Score: " + time;
