@@ -40,7 +40,7 @@
 
             class Ball {
 
-                constructor(x,y,radius,dx,dy,sound) {
+                constructor(x,y,radius,dx,dy,sound = null) {
                     this.x = Math.floor(Math.random() * 480);
                     this.y = Math.floor(Math.random() * 320);
                     this.radius = radius;
@@ -60,7 +60,7 @@
                 death(death = false) {
                     if(death) {
                         this.die = true;
-                        console.log("Sound: " + this.sound);
+                        //console.log("Sound: " + this.sound);
                     }
                 }
 
@@ -145,7 +145,7 @@
                 var negatex = 1;
                 var negatey = 1;
                 for(i = 0; i < 200; i++) {
-                    sound[i] = new Audio("squeak.mp3");
+                    //sound[i] = new Audio("squeak.mp3");
                 }
                 for(i = 0; i < 200; i++) {
                     if(i % 2 == 0) negatex = negatex;
@@ -207,7 +207,8 @@
             }
 
             function reset() {
-                leaderboard[document.getElementById("name").text] = time;
+                leaderboard[li].name = document.getElementById("name").innerText;
+                leaderboard[li].score = time;
                 //leaderboard.sort();
                 //leaderboard.reverse();
                 document.getElementById("sw").innerHTML = "Score: " + time;
@@ -215,7 +216,7 @@
                 clearInterval(interval);
                 createBalls();
                 toggle = false;
-                document.getElementById("leaderboard").innerHTML = "Leaderboard: " + leaderboard.key + leaderboard.value;
+                document.getElementById("leaderboard").innerHTML = "Leaderboard: " + leaderboard.name + leaderboard.score;
             }
         
         </script>
