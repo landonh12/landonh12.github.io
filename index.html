@@ -147,7 +147,7 @@
                 var negatex = 1;
                 var negatey = 1;
                 sound = new Audio("squeak.mp3");
-                for(i = 0; i < 100; i++) {
+                for(i = 0; i < 200; i++) {
                     if(i % 2 == 0) negatex = negatex;
                     else negatex *= -1
                     if(i % 3 == 0) negatey = negatey;
@@ -170,7 +170,7 @@
                 ctx.clearRect(0,0,canvas.width, canvas.height);
                 time--;
                 document.getElementById("sw").innerHTML = "Score: " + time;
-                for(i = 0; i < 100; i++) {
+                for(i = 0; i < 200; i++) {
                     if(detectDeath(b[i], destroyer)) {
                         //console.log("death!");
                         b[i].death(true);
@@ -188,10 +188,10 @@
 
             function winner() {
                 win = true;
-                for(i = 0; i < 100; i++) {
+                for(i = 0; i < 200; i++) {
                     if(b[i].die != true) {
                         win = false;
-                        i = 101;
+                        i = 201;
                     }
                 }
                 return win;
