@@ -28,7 +28,7 @@
 
         <body>
             <div align="center">
-            <canvas id="myCanvas" width="960" height="640"></canvas>
+            <canvas id="myCanvas" width="640" height="480"></canvas>
             <button onclick="set()">Start</button>
             <button onclick="reset()">Reset</button>
             <p id="sw">Score: 10000</p>
@@ -43,8 +43,8 @@
             class Ball {
 
                 constructor(x,y,radius,dx,dy,sound) {
-                    this.x = Math.floor(Math.random() * 480);
-                    this.y = Math.floor(Math.random() * 320);
+                    this.x = Math.floor(Math.random() * 640);
+                    this.y = Math.floor(Math.random() * 480);
                     this.radius = radius;
                     this.dx = dx;
                     this.dy = dy;
