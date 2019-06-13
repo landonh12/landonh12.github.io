@@ -9,30 +9,30 @@
     }
 
     @keyframes banner {
-        from {top:60%;}
-        to {top:20%;}
+        from {top:60%; opacity:0%;}
+        to {top:20%; opacity:100%;}
     }
 
     .center {
         backdrop-filter: blur(10px);
-        background-blend-mode: color-burn;
         background-color: rgba(255, 255, 255, 0.4);
-        width: 600px;
-        height: 170px;
+        width: 50%;
+        height: 35%;
         position: absolute;
         left: 50%;
         top: 20%;
         transform: translate(-50%, -50%);
-        text-align: center;
-        padding-left: 10px;
-        padding-bottom: 10px;
-        font-family:Verdana, Geneva, Tahoma, sans-serif;
         animation-name: banner;
         animation-duration: 2s;
         border: 2px solid rgb(255, 255, 255, 0.4);
         border-radius: 10px;
-        text-shadow: 1px 1px 10px #746d6d;
         box-shadow: 1px 1px 10px #000000;
+    }
+
+    .box-center-text {
+        font-family:Verdana, Geneva, Tahoma, sans-serif;
+        text-align: center;
+        text-shadow: 1px 1px 10px #746d6d;
     }
 
     .bg {
@@ -55,16 +55,24 @@
     </div>
 
     <div class="center">
-        <h1>
-            Landon Haugh
+        <div class="box-center-text">
+            <h1>
+                Landon Haugh
+                <br>
+            </h1>
+            Mississippi State Univerysity
             <br>
-        </h1>
-        Mississippi State Univerysity
-        <br>
-        Computer Engineering
-        <br>
-        Honda Manufacturing of Alabama
-        <br>
-        AE Engineering Co-Op
+            Computer Engineering
+            <br>
+            Honda Manufacturing of Alabama
+            <br>
+            AE Engineering Co-Op
+            <br>
+            <br>
+            <a href="http://linkedin.com/in/landon-haugh-417582155"><img src="linkedin.svg" width="40"></a>
+            &nbsp;
+            <a href="http://github.com/landonh12"><img src="github.svg" width="40"></a>
+        </div>
     </div>
+
 </html>
