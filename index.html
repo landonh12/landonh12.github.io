@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
 <style>
 
     html, body{
@@ -8,31 +10,26 @@
         padding: 0;
     }
 
-    @keyframes banner {
-        from {top:60%; opacity:0%;}
-        to {top:20%; opacity:100%;}
-    }
-
     .center {
-        backdrop-filter: blur(10px);
+        backdrop-filter: blur(5px);
         background-color: rgba(255, 255, 255, 0.4);
         width: 50%;
-        height: 35%;
+        height: auto;
         position: absolute;
         left: 50%;
-        top: 20%;
+        top: 35%;
         transform: translate(-50%, -50%);
-        animation-name: banner;
-        animation-duration: 2s;
         border: 2px solid rgb(255, 255, 255, 0.4);
         border-radius: 10px;
         box-shadow: 1px 1px 10px #000000;
+        transition: max-height 1s;
     }
 
     .box-center-text {
         font-family:Verdana, Geneva, Tahoma, sans-serif;
         text-align: center;
         text-shadow: 1px 1px 10px #746d6d;
+        padding: 40px 40px 40px 40px
     }
 
     .bg {
@@ -51,11 +48,16 @@
 <html>
 
     <title>Landon Haugh</title>
-    <div class="bg">
+        <div class="bg">
+        </div>
     </div>
 
     <div class="center">
-        <div class="box-center-text">
+            <div class="w3-center">
+                    <button class="w3-button w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
+                    <button class="w3-button w3-display-right" onclick="plusDivs(+1)">&#10095;</button>
+                </div>
+        <div class="box-center-text mySlides w3-animate-zoom">
             <h1>
                 Landon Haugh
                 <br>
@@ -73,6 +75,60 @@
             &nbsp;
             <a href="http://github.com/landonh12"><img src="github.svg" width="40"></a>
         </div>
+
+        <div class="box-center-text mySlides w3-animate-zoom">
+                <h1>
+                    Hey.
+                </h1>
+                I like writing code. It's that simple. I've written software for robots, websites, signal processing, automobiles, embedded systems,
+                operating systems, assembly lines, etc. The list goes on. I'm looking to find somewhere that will take me in and let me write some code for them. That's kind
+                of all I want in life right now.
+        </div>
+
+        <div class="box-center-text mySlides w3-animate-zoom">
+                <h1>
+                    My Resumé
+                </h1>
+        </div>
+
+        <div class="box-center-text mySlides w3-animate-zoom">
+                <h1>
+                    Here's more about me.
+                </h1>
+                You're probably wondering why the McLaren MP4/4 is the background image here.
+                <br><br>
+                Well, I'm an avid motorsports fan, and that car is probably one of the coolest ones in existence. 
+                It doesn't help that I'm currently working for Honda, and Honda supplied the (series-dominating) engine for that car.
+                <br><br>
+                I'm really into sim racing. I play iRacing regularly, and have quite a few wins under my belt in both Oval and Road.
+                (Top split Oval too!). The dream is to one day be an engineer for a racing team, possibly doing ECU software or controls 
+                for a top-tier race car. That's quite a stretch of a dream though, so I'm open to anything software wise.
+        </div>
     </div>
+
+    <script>
+        var slideIndex = 1;
+        showDivs(slideIndex);
+
+        function plusDivs(n) {
+        showDivs(slideIndex += n);
+        }
+
+        
+        function currentDiv(n) {
+            showDivs(n);
+        }
+
+        function showDivs(n) {
+        var i;
+        var x = document.getElementsByClassName("mySlides");
+        if (n > x.length) {slideIndex = 1} 
+        if (n < 1) {slideIndex = x.length} ;
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none"; 
+        }
+        x[slideIndex-1].style.display = "block"; 
+        }
+    </script>
 
 </html>
