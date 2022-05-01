@@ -51,6 +51,15 @@ What if we don't encode as h264?
 gst-launch-1.0 v4l2src device=/dev/video3 ! imxvideoconvert_g2d ! "video/x-raw, height=640, width=480, framerate=30/1" ! avimux ! filesink location='/home/user/video_noh264.avi'
 ```
 
+The file size is HUGE! ~100MB per 3 seconds of video.
+
+### OpenCV
+
+We can get 30fps in OpenCV! Just use the following VideoCapture pipeline:
+```
+cap = cv2.VideoCapture('v4l2src device=/dev/video3 ! video/x-raw,framerate=30/1,width=640,height=480 ! appsink', cv2.CAP_GSTREAMER)
+```
+
 
 ## Resources
 > i.MX 8M Plus Gstreamer Application Notes
